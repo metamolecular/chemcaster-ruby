@@ -14,10 +14,10 @@ describe Chemcaster::Link do
       @name = 'foo'
       @uri = 'http://example.com'
       @media_name = 'text/plain'
+      @media_class = mock(Class, :name => 'Foo')
       @client = mock(RestClient::Resource, :get => nil)
-      @media_type = mock(MediaType, :name => @media_name, :representation => nil)
       RestClient::Resource.stub!(:new).and_return(@client)
-      MediaType.stub!(:locate).and_return @media_type
+      MediaType.stub!(:locate).and_return @media_class
     end
     
     it "creates the client" do
@@ -37,12 +37,14 @@ describe Chemcaster::Link do
       
       describe "when http get successful" do
         before(:each) do
-          @response = "foo"
+          @response = "{}"
+          @representation = mock(Object)
+          @media_class.stub!(:new).and_return(@representation)
           @client.stub!(:get).and_return @response
         end
         
-        it "creates representation with response text" do
-          @media_type.should_receive(:representation).with @response
+        it "creates the representation from response" do
+          @media_class.should_receive(:new).with(JSON(@response))
           @link.get
         end
         

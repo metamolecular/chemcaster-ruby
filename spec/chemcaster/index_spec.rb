@@ -1,34 +1,46 @@
 require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
 
 describe Index do
+  before(:each) do
+    @hash = {}
+  end
+  
   def do_new
-    @index = Index.new @link
+    @index = Index.new @hash
   end
   
-  def do_load
-    @index.load
-  end
-  
-  describe "load" do
+  describe "with all valid attributes" do
     before(:each) do
-      @response = {}
-      @link = mock(Link, :get => @response)
+      @hash['create'] = {
+        'name' => 'create Foo',
+        'uri' => 'http://foo.com',
+        'media_type' => 'text/foo'
+      }
     end
     
-    describe "with a valid link response" do
+    describe "create" do
       before(:each) do
-        @create_hash = {
-          :name => 'create'
-        }
-        @response['create'] = @create_hash
-        @create_link = mock(Link)
-        Link.stub!(:new).with(@create_hash).and_return(@create_link)
+        @item = mock(Item)
+        @new_item = mock(Item)
+        @create = mock(Link, :post => nil)
+        Link.stub!(:new).and_return(@create)
+        Item.stub!(:new).and_return(@new_item)
         do_new
-        do_load
       end
-    
-      it "assigns create link" do
-        @index.create.should == @create_link
+      
+      describe "when successful" do
+        before(:each) do
+          @create.stub!(:post).and_return(@new_item)
+        end
+        
+        it "posts representation to create link" do
+          @create.should_receive(:post).with(@item)
+          @index.create(@item)
+        end
+      
+        it "returns representation" do
+          @index.create(@item).should == @new_item
+        end
       end
     end
   end

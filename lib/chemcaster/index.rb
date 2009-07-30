@@ -1,14 +1,17 @@
 module Chemcaster
-  class Index
-    attr_accessor :create
-    
-    def initialize link
-      @link = link
+  class Index    
+    def initialize hash
+      load_hash hash
     end
     
-    def load
-      @atts = @link.get
-      @create = Link.new(@atts['create'])
+    def create representation
+      @create.post representation
+    end
+    
+    protected
+    
+    def load_hash atts
+      @create = Link.new(atts['create'])
     end
   end
 end
