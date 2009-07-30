@@ -14,7 +14,7 @@ describe Chemcaster::Link do
       @name = 'foo'
       @uri = 'http://example.com'
       @media_name = 'text/plain'
-      @media_class = mock(Class, :name => 'Foo')
+      @media_class = mock(Class, :mime_type => 'application/foo')
       @client = mock(RestClient::Resource, :get => nil, :put => nil)
       RestClient::Resource.stub!(:new).and_return(@client)
       MediaType.stub!(:locate).and_return @media_class

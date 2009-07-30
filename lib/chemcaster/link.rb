@@ -6,18 +6,18 @@ module Chemcaster
     end
     
     def get
-      response = decode @client.get(:accept => @media_class.name)
+      response = decode @client.get(:accept => @media_class.mime_type)
       @media_class.new response
     end
     
     def put representation
       response = decode @client.put(encode(representation),
-        :accept => @media_class.name, :content_type => @media_class.name)
+        :accept => @media_class.mime_type, :content_type => @media_class.mime_type)
       @media_class.new response
     end
     
     def delete
-      response = decode @client.delete(:accept => @media_class.name)
+      response = decode @client.delete(:accept => @media_class.mime_type)
       @media_class.new response
     end
     
