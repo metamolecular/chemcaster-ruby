@@ -5,56 +5,99 @@ describe RegistryIndex do
     @index = RegistryIndex.new @link
   end
   
-  describe "with a link" do
+  describe "load" do
     before(:each) do
-      @link = mock(Link, :get => {'registries' => []})
+      @link = mock(Link, :get => {})
     end
     
-    it "has link" do
-      do_new
-      @index.link.should == @link
-    end
-    
-    describe "representing two registries" do
+    describe "with a working link" do
       before(:each) do
-        @registry_atts = [
+        @registry_array = [
           {
-            'name' => 'foo',
+            'name' => 'registry',
             'uri' => 'http://foo.com',
             'media_type' => 'application/foo'
-          },
-          {
-            'name' => 'bar',
-            'uri' => 'http://bar.com',
-            'media_type' => 'application/bar'
           }
         ]
-        @link.stub!(:get).and_return({'registries' => @registry_atts})
-        @registry_link1 = mock(Link)
-        @registry_link2 = mock(Link)
-        Link.stub!(:new).and_return @registry_link1, @registry_link2
-      end
-      
-      it "creates both links" do
-        Link.should_receive(:new).once.with(@registry_atts[0]).ordered
-        Link.should_receive(:new).once.with(@registry_atts[1]).ordered
+        @post_hash = {
+          'name' => 'post',
+          'uri' => 'http://foo.com',
+          'media_type' => 'application/foo'
+        }
+        @response = {
+          'registries' => @registry_array,
+          'post' => @post_hash
+        }
+        @registry_link = mock(Link)
+        @post_link = mock(Link)
+        Link.stub!(:new).with(@registry_array[0]).and_return(@registry_link)
+        Link.stub!(:new).with(@post_hash).and_return(@post_link)
+        @link.stub!(:get).and_return @response
         do_new
       end
       
-      it "has both links" do
-        do_new
-        @index.registries.should == [@registry_link1, @registry_link2]
-      end
-    end
-    
-    describe "that raises on get" do
-      before(:each) do
-        @link.stub!(:get).and_raise
+      it "assigns registries" do
+        @index.load
+        @index.registries.should == [@registry_link]
       end
       
-      it "raises" do
-        lambda{do_new}.should raise_error
+      it "assigns post link" do
+        @index.load
+        @index.post.should == @post_link
       end
     end
   end
+  
+  #  describe "with a link" do
+  #    before(:each) do
+  #      @link = mock(Link, :get => {'registries' => []})
+  #    end
+  #    
+  #    it "has link" do
+  #      do_new
+  #      @index.link.should == @link
+  #    end
+  #    
+  #    describe "representing two registries" do
+  #      before(:each) do
+  #        @registry_atts = [
+  #          {
+  #            'name' => 'foo',
+  #            'uri' => 'http://foo.com',
+  #            'media_type' => 'application/foo'
+  #          },
+  #          {
+  #            'name' => 'bar',
+  #            'uri' => 'http://bar.com',
+  #            'media_type' => 'application/bar'
+  #          }
+  #        ]
+  #        @link.stub!(:get).and_return({'registries' => @registry_atts})
+  #        @registry_link1 = mock(Link)
+  #        @registry_link2 = mock(Link)
+  #        Link.stub!(:new).and_return @registry_link1, @registry_link2
+  #      end
+  #      
+  #      it "creates both links" do
+  #        Link.should_receive(:new).once.with(@registry_atts[0]).ordered
+  #        Link.should_receive(:new).once.with(@registry_atts[1]).ordered
+  #        do_new
+  #      end
+  #      
+  #      it "has both links" do
+  #        do_new
+  #        @index.registries.should == [@registry_link1, @registry_link2]
+  #      end
+  #    end
+  #    
+  #    describe "that raises on get" do
+  #      before(:each) do
+  #        @link.stub!(:get).and_raise
+  #      end
+  #      
+  #      it "raises" do
+  #        lambda{do_new}.should raise_error
+  #      end
+  #    end
+#end
 end
