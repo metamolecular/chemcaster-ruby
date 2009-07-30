@@ -6,8 +6,24 @@ module Chemcaster
     end
     
     def get
-      json = JSON @client.get(:accept => @media_class.name)
-      @media_class.new json
+      response = decode @client.get(:accept => @media_class.name)
+      @media_class.new response
+    end
+    
+    def put representation
+      response = decode @client.put(encode(representation),
+        :accept => @media_class.name, :content_type => @media_class.name)
+      @media_class.new response
+    end
+    
+    private
+    
+    def decode response
+      JSON.parse response
+    end
+    
+    def encode representation
+      JSON representation.to_hash
     end
   end
 end

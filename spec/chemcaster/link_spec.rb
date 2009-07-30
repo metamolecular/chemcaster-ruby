@@ -15,7 +15,7 @@ describe Chemcaster::Link do
       @uri = 'http://example.com'
       @media_name = 'text/plain'
       @media_class = mock(Class, :name => 'Foo')
-      @client = mock(RestClient::Resource, :get => nil)
+      @client = mock(RestClient::Resource, :get => nil, :put => nil)
       RestClient::Resource.stub!(:new).and_return(@client)
       MediaType.stub!(:locate).and_return @media_class
     end
@@ -50,6 +50,31 @@ describe Chemcaster::Link do
         
         it "returns the representation" do
           @link.get.should == @representation
+        end
+      end
+    end
+    
+    describe "put" do
+      before(:each) do
+        do_new
+      end
+      
+      describe "when http put successful" do
+        before(:each) do
+          @response = "{}"
+          @representation = mock(Object)
+          @new_representation = mock(Object, :to_hash => {})
+          @media_class.stub!(:new).with(JSON(@response)).and_return(@representation)
+          @client.stub!(:put).and_return @response
+        end
+        
+        it "creates the representation from response" do
+          @media_class.should_receive(:new).with(JSON(@response))
+          @link.put(@new_representation)
+        end
+        
+        it "returns the representation" do
+          @link.put(@new_representation).should == @representation
         end
       end
     end
