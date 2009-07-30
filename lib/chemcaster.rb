@@ -1,6 +1,7 @@
 require 'chemcaster/registry_index'
 require 'chemcaster/registry'
 require 'chemcaster/link'
+require 'chemcaster/index'
 require 'chemcaster/representation'
 require 'chemcaster/media_type'
 

@@ -1,23 +1,24 @@
+require 'chemcaster/index'
+
 module Chemcaster
-  class RegistryIndex
+  class RegistryIndex < Index
     attr_reader :link
     attr_reader :registries
-    attr_reader :post
+    attr_reader :create
     
-    def initialize link
-      @link = link
-    end
+#    def initialize link
+#      @link = link
+#    end
     
     def load
-      atts = @link.get
-      @registries = load_registries atts
-      @post = Link.new(atts['post'])
+      super
+      @registries = load_registries
     end
     
     private
     
-    def load_registries atts
-      atts['registries'].inject([]) do |result, atts|
+    def load_registries
+      @atts['registries'].inject([]) do |result, atts|
         result << Link.new(atts)
       end
     end

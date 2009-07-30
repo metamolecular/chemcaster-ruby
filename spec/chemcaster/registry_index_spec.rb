@@ -5,45 +5,33 @@ describe RegistryIndex do
     @index = RegistryIndex.new @link
   end
   
+  def do_load
+    @index.load
+  end
+  
   describe "load" do
     before(:each) do
-      @link = mock(Link, :get => {})
+      @response = {}
+      @link = mock(Link, :get => @response)
     end
     
     describe "with a working link" do
       before(:each) do
         @registry_array = [
           {
-            'name' => 'registry',
-            'uri' => 'http://foo.com',
-            'media_type' => 'application/foo'
+            'name' => 'registry'
           }
         ]
-        @post_hash = {
-          'name' => 'post',
-          'uri' => 'http://foo.com',
-          'media_type' => 'application/foo'
-        }
-        @response = {
-          'registries' => @registry_array,
-          'post' => @post_hash
-        }
+        @response['registries'] = @registry_array
         @registry_link = mock(Link)
-        @post_link = mock(Link)
         Link.stub!(:new).with(@registry_array[0]).and_return(@registry_link)
-        Link.stub!(:new).with(@post_hash).and_return(@post_link)
-        @link.stub!(:get).and_return @response
+        Link.stub!(:new).with(nil).and_return(mock(Link))
         do_new
+        do_load
       end
       
       it "assigns registries" do
-        @index.load
         @index.registries.should == [@registry_link]
-      end
-      
-      it "assigns post link" do
-        @index.load
-        @index.post.should == @post_link
       end
     end
   end
@@ -99,5 +87,5 @@ describe RegistryIndex do
   #        lambda{do_new}.should raise_error
   #      end
   #    end
-#end
+  #end
 end
