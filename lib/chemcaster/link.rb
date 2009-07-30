@@ -16,6 +16,11 @@ module Chemcaster
       @media_class.new response
     end
     
+    def delete
+      response = decode @client.delete(:accept => @media_class.name)
+      @media_class.new response
+    end
+    
     private
     
     def decode response

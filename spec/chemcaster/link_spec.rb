@@ -78,5 +78,29 @@ describe Chemcaster::Link do
         end
       end
     end
+    
+    describe "delete" do
+      before(:each) do
+        do_new
+      end
+      
+      describe "when http get successful" do
+        before(:each) do
+          @response = "{}"
+          @representation = mock(Object)
+          @media_class.stub!(:new).and_return(@representation)
+          @client.stub!(:delete).and_return @response
+        end
+        
+        it "creates the representation from response" do
+          @media_class.should_receive(:new).with(JSON(@response))
+          @link.delete
+        end
+        
+        it "returns the representation" do
+          @link.delete.should == @representation
+        end
+      end
+    end
   end
 end
