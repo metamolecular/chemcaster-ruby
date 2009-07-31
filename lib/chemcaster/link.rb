@@ -18,6 +18,12 @@ module Chemcaster
       @media_class.new response
     end
     
+    def post representation
+      response = decode @client.post(encode(representation),
+        :accept => @media_type, :content_type => @media_type)
+      @media_class.new response
+    end
+    
     def delete
       response = decode @client.delete(:accept => @media__type)
       @media_class.new response

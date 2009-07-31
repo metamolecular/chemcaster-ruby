@@ -83,6 +83,31 @@ describe Chemcaster::Link do
       end
     end
     
+    describe "post" do
+      before(:each) do
+        do_new
+      end
+      
+      describe "when http post successful" do
+        before(:each) do
+          @response = "{}"
+          @representation = mock(Object)
+          @new_representation = mock(Object, :to_hash => {})
+          @media_class.stub!(:new).with(JSON(@response)).and_return(@representation)
+          @client.stub!(:post).and_return @response
+        end
+        
+        it "creates the representation from response" do
+          @media_class.should_receive(:new).with(JSON(@response))
+          @link.post(@new_representation)
+        end
+        
+        it "returns the representation" do
+          @link.post(@new_representation).should == @representation
+        end
+      end
+    end
+    
     describe "delete" do
       before(:each) do
         do_new
