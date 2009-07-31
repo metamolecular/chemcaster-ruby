@@ -9,11 +9,11 @@ describe Registry do
     @registry = Registry.new @hash
   end
   
-  describe "with all valid attributes" do
+  describe "with a name" do
     before(:each) do
       @name = 'foo'
       @hash['name'] = @name
-      Link.stub!(:new).with(nil).and_return(mock(Link))
+#      Link.stub!(:new).with(nil).and_return(mock(Link))
       do_new
     end
     

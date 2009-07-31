@@ -7,6 +7,7 @@ require 'chemcaster/representation'
 require 'chemcaster/media_type'
 require 'chemcaster/service'
 require 'chemcaster/login'
+require 'chemcaster/error'
 
 require 'rubygems'
 require 'restclient'

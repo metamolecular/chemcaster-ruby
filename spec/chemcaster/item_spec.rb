@@ -9,23 +9,29 @@ describe Item do
     @item = Item.new @hash
   end
   
-  describe "with all valid attributes" do
+  describe "with no attributes" do
     before(:each) do
-      @hash['index'] = {
-        'name' => 'all Foos',
-        'uri' => 'http://foo.com',
-        'media_type' => 'text/foo'
-      }
-      @hash['update'] = {
-        'name' => 'delete Foo',
-        'uri' => 'http://foo.com',
-        'media_type' => 'text/foo'
-      }
+      do_new
+    end
+    
+    it "raises for index" do
+      lambda{@item.index}.should raise_error(LinkNotDefined)
+    end
+    
+    it "raises for update" do
+      lambda{@item.update(nil)}.should raise_error(LinkNotDefined)
+    end
+    
+    it "raises for destroy" do
+      lambda{@item.destroy}.should raise_error(LinkNotDefined)
     end
   end
   
   describe "index" do
     before(:each) do
+      @hash['index'] = {
+        'name' => 'destroy'
+      }
       @index_link = mock(Link, :get => nil)
       Link.stub!(:new).with(@hash['index']).and_return @index_link
       do_new
@@ -50,6 +56,9 @@ describe Item do
   
   describe "update" do
     before(:each) do
+      @hash['update'] = {
+        'name' => 'destroy'
+      }
       @update_link = mock(Link, :put => nil)
       Link.stub!(:new).with(@hash['update']).and_return @update_link
       do_new
@@ -75,6 +84,9 @@ describe Item do
   
   describe "destroy" do
     before(:each) do
+      @hash['destroy'] = {
+        'name' => 'destroy'
+      }
       @destroy_link = mock(Link, :delete => nil)
       Link.stub!(:new).with(@hash['destroy']).and_return @destroy_link
       do_new
