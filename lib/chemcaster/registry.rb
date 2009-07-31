@@ -7,6 +7,7 @@ module Chemcaster
     protected
     
     def load_hash hash
+      super
       @name = hash['name']
     end
   end

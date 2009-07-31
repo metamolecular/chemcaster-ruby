@@ -17,6 +17,7 @@ module Chemcaster
     protected
     
     def load_hash hash
+      super
       @index = Link.new hash['index']
       @update = Link.new hash['update']
       @destroy = Link.new hash['destroy']
