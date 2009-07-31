@@ -1,24 +1,13 @@
-require 'chemcaster/representation'
+require 'chemcaster/item'
 
 module Chemcaster
-  class Registry < Representation
-    attr_reader :index
-    attr_reader :create
+  class Registry < Item
     attr_accessor :name
-    attr_reader :queries
-    attr_reader :structures
     
-    def initialize link
-      @link = link
-    end
+    protected
     
-    def load
-      hash = @link.get
-      @index = Link.new hash['index']
-      @create = Link.new hash['create']
+    def load_hash hash
       @name = hash['name']
-      @queries = Link.new hash['queries']
-      @structures = Link.new hash['structures']
     end
   end
 end

@@ -11,22 +11,26 @@ describe Chemcaster::Link do
   
   describe "with valid attributes" do
     before(:each) do
+      @user = 'joe@example.com'
+      @pass = 'secret'
       @name = 'foo'
       @uri = 'http://example.com'
       @media_name = 'text/plain'
       @media_class = mock(Class, :mime_type => 'application/foo')
       @client = mock(RestClient::Resource, :get => nil, :put => nil)
+      @login = mock(Login, :user => @user, :password => @pass)
+      Login.stub!(:instance).and_return @login
       RestClient::Resource.stub!(:new).and_return(@client)
-      MediaType.stub!(:locate).and_return @media_class
+      MediaType.stub!(:representation).and_return @media_class
     end
     
     it "creates the client" do
-      RestClient::Resource.should_receive(:new).with(@uri).and_return(@client)
+      RestClient::Resource.should_receive(:new).with(@uri, :user => @user, :password => @pass).and_return(@client)
       do_new
     end
     
     it "locates the media type" do
-      MediaType.should_receive(:locate).with(@media_name)
+      MediaType.should_receive(:representation).with(@media_name)
       do_new
     end
     

@@ -1,8 +1,9 @@
 module Chemcaster
   class Link
     def initialize atts={}
-      @client = RestClient::Resource.new atts['uri']
-      @media_class = MediaType.locate atts['media_type']
+      @client = RestClient::Resource.new atts['uri'],
+        :user => Login.instance.user || '', :password => Login.instance.password || ''
+      @media_class = MediaType.representation atts['media_type']
       @media_type = atts['media_type']
     end
     

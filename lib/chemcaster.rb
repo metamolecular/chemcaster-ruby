@@ -5,6 +5,8 @@ require 'chemcaster/index'
 require 'chemcaster/item'
 require 'chemcaster/representation'
 require 'chemcaster/media_type'
+require 'chemcaster/service'
+require 'chemcaster/login'
 
 require 'rubygems'
 require 'restclient'

@@ -1,7 +1,9 @@
+require 'chemcaster/representation'
+
 module Chemcaster
-  class Index    
+  class Index < Representation
     def initialize hash
-      load_hash hash
+      super
     end
     
     def create representation
