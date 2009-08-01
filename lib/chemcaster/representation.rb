@@ -4,6 +4,10 @@ module Chemcaster
       load_hash hash
     end
     
+    def to_hash
+      {}
+    end
+    
     protected
     
     def load_hash hash

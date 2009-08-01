@@ -13,8 +13,11 @@ describe Registry do
     before(:each) do
       @name = 'foo'
       @hash['name'] = @name
-#      Link.stub!(:new).with(nil).and_return(mock(Link))
       do_new
+    end
+    
+    it "returns hash" do
+      @registry.to_hash.should == {'name' => @name}
     end
     
     it "returns name" do

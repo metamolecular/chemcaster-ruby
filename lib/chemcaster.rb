@@ -1,3 +1,4 @@
+require 'chemcaster/service'
 require 'chemcaster/registry_index'
 require 'chemcaster/registry'
 require 'chemcaster/link'
@@ -5,7 +6,7 @@ require 'chemcaster/index'
 require 'chemcaster/item'
 require 'chemcaster/representation'
 require 'chemcaster/media_type'
-require 'chemcaster/service'
+require 'chemcaster/site'
 require 'chemcaster/login'
 require 'chemcaster/error'
 

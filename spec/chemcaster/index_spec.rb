@@ -16,6 +16,26 @@ describe Index do
         'uri' => 'http://foo.com',
         'media_type' => 'text/foo'
       }
+      @hash['items'] = [
+        {
+          'name' => 'items listing',
+          'uri' => 'http://foo.com',
+          'media_type' => 'text/foo'
+        }
+      ]
+    end
+    
+    describe "items" do
+      before(:each) do
+        @item_link = mock(Link)
+        @items = [@item_link]
+        Link.stub!(:new).and_return @item_link
+        do_new
+      end
+      
+      it "gives items" do
+        @index.items.should == @items
+      end
     end
     
     describe "create" do

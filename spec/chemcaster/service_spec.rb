@@ -1,34 +1,25 @@
 require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
 
 describe Service do
-  describe "connnect" do
+  before(:each) do
+    @hash = {}
+  end
+  
+  def do_new
+    @service = Service.new @hash
+  end
+  
+  describe "with registries" do
     before(:each) do
-      @uri = 'http://example.com'
-      @media_type = 'application/example'
-      @options = {
-        :user => 'joe@example.com',
-        :password => 'secret'
-      }
+      @link_hash = mock_link_hash
+      @hash['registries'] = @link_hash
+      @registries = mock(Link)
+      Link.stub!(:new).with(@link_hash).and_return(@registries)
+      do_new
     end
     
-    def do_connect
-      Service.connect(@uri, @media_type, @options)
-    end
-    
-    describe "when successful" do
-      before(:each) do
-        @link = mock(Link)
-        Link.stub!(:new).and_return @link
-      end
-      
-      it "returns link" do
-        do_connect.should == @link
-      end
-      
-      it "logs in" do
-        Login.should_receive(:login).with(@options[:user], @options[:password])
-        do_connect
-      end
+    it "returns registries" do
+      @service.registries.should == @registries
     end
   end
 end

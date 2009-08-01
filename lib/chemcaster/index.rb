@@ -2,9 +2,7 @@ require 'chemcaster/representation'
 
 module Chemcaster
   class Index < Representation
-    def initialize hash
-      super
-    end
+    attr_accessor :items
     
     def create representation
       @create.post representation
@@ -14,6 +12,9 @@ module Chemcaster
     
     def load_hash atts
       @create = Link.new(atts['create'])
+      @items = atts['items'].inject([]) do |result, atts|
+        result << Link.new(atts)
+      end
     end
   end
 end

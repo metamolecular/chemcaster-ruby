@@ -9,6 +9,7 @@ module Chemcaster
     
     def get
       response = decode @client.get(:accept => @media_type)
+      puts response
       @media_class.new response
     end
     
@@ -36,7 +37,8 @@ module Chemcaster
     end
     
     def encode representation
-      JSON representation.to_hash
+      name = representation.class.to_s.gsub(/Chemcaster::/, '').downcase
+      JSON(name => representation.to_hash)
     end
   end
 end

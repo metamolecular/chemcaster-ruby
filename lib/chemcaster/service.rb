@@ -1,9 +1,15 @@
+require 'chemcaster/representation'
+
 module Chemcaster
-  class Service
-    def self.connect uri, media_type, options = {}
-      Login.login options[:user], options[:password]
-      Link.new 'uri' => uri,
-        'media_type' => media_type, 'name' => 'root'
+  class Service < Representation
+    attr_accessor :registries
+    
+    protected
+    
+    def load_hash hash
+      super
+      puts hash['registries']
+      @registries = Link.new hash['registries']
     end
   end
 end
