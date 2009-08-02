@@ -12,7 +12,10 @@ describe Registry do
   describe "with a name" do
     before(:each) do
       @name = 'foo'
-      @hash['name'] = @name
+      @registry = {
+        'name' => @name
+      }
+      @hash['registry'] = @registry
       do_new
     end
     

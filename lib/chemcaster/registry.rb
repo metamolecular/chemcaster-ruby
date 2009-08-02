@@ -12,7 +12,7 @@ module Chemcaster
     
     def load_hash hash
       super
-      @name = hash['name']
+      @name = hash['registry']['name']
     end
   end
 end

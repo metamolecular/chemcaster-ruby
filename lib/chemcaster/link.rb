@@ -9,7 +9,6 @@ module Chemcaster
     
     def get
       response = decode @client.get(:accept => @media_type)
-      puts response
       @media_class.new response
     end
     

@@ -8,7 +8,6 @@ module Chemcaster
     
     def load_hash hash
       super
-      puts hash['registries']
       @registries = Link.new hash['registries']
     end
   end
