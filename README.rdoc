@@ -1,6 +1,6 @@
 = Chemcaster Ruby API
 
-This is the Ruby library for the Chemcaster[http://chemcaster.com] RESTful Web
+This is the Ruby interface for the Chemcaster[http://chemcaster.com] RESTful Web
 API. It consists of basic functionality needed to begin building
 applications that require chemical structure registration, storage, imaging, and
 search in Ruby.
