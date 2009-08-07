@@ -1,4 +1,4 @@
 = The Chemcaster Ruby API
 
-This is the Ruby library for the [Chemcaster](http://chemcaster) RESTful Web
+This is the Ruby library for the Chemcaster[http://chemcaster.com] RESTful Web
 API.
