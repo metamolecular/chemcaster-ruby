@@ -6,7 +6,7 @@ describe Registry do
   end
   
   def do_new
-    @registry = Registry.new @hash
+    @registry = Registry.new mock(Link), @hash
   end
   
   describe "with a name" do

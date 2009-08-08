@@ -6,7 +6,7 @@ describe Structure do
   end
   
   def do_new
-    @structure = Structure.new @hash
+    @structure = Structure.new mock(Link), @hash
   end
   
   describe "with a name" do

@@ -6,7 +6,8 @@ describe Index do
   end
   
   def do_new
-    @index = Index.new @hash
+    @link = mock(Link)
+    @index = Index.new @link, @hash
   end
   
   describe "with all valid attributes" do
@@ -41,25 +42,18 @@ describe Index do
     describe "create" do
       before(:each) do
         @item = mock(Item)
-        @new_item = mock(Item)
-        @create = mock(Link, :post => nil)
         Link.stub!(:new).and_return(@create)
-        Item.stub!(:new).and_return(@new_item)
         do_new
       end
       
       describe "when successful" do
         before(:each) do
-          @create.stub!(:post).and_return(@new_item)
+          @link.stub!(:post).and_return(@new_item)
         end
         
-        it "posts representation to create link" do
-          @create.should_receive(:post).with(@item)
+        it "posts representation to link" do
+          @link.should_receive(:post).with(@item)
           @index.create(@item)
-        end
-      
-        it "returns representation" do
-          @index.create(@item).should == @new_item
         end
       end
     end

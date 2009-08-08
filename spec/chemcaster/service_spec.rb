@@ -6,7 +6,7 @@ describe Service do
   end
   
   def do_new
-    @service = Service.new @hash
+    @service = Service.new mock(Link), @hash
   end
   
   describe "with registries" do
@@ -15,7 +15,7 @@ describe Service do
       @hash['registries'] = @link_hash
       @registries = mock(Index)
       @registries_link = mock(Link, :get => @registries)
-      Link.stub!(:new).with(@link_hash).and_return(@registries_link)
+      Link.stub!(:new).and_return(@registries_link)
       do_new
     end
     

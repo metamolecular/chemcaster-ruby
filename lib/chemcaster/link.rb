@@ -15,14 +15,14 @@ module Chemcaster
     def get
       validate
       response = decode @client.get(:accept => @media_type)
-      @media_class.new response
+      @media_class.new self, response
     end
     
     def put representation
       validate
       response = decode @client.put(encode(representation),
         :accept => @media_type, :content_type => @media_type)
-      @media_class.new response
+      @media_class.new self, response
     end
     
     def post representation
