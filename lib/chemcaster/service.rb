@@ -5,7 +5,6 @@ module Chemcaster
     attr_accessor :registries_link
     
     def registries
-      raise LinkNotDefined.new("link 'index' not defined by server") unless @registries_link
       @registries_link.get
     end
     
