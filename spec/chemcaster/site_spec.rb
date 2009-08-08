@@ -4,7 +4,6 @@ describe Site do
   describe "connnect" do
     before(:each) do
       @uri = 'http://example.com'
-      @media_type = 'application/example'
       @options = {
         :user => 'joe@example.com',
         :password => 'secret'
@@ -12,17 +11,18 @@ describe Site do
     end
     
     def do_connect
-      Site.connect(@uri, @media_type, @options)
+      Site.connect(@uri, @options)
     end
     
     describe "when successful" do
       before(:each) do
-        @link = mock(Link)
+        @service = mock(Service)
+        @link = mock(Link, :get => @service)
         Link.stub!(:new).and_return @link
       end
       
       it "returns link" do
-        do_connect.should == @link
+        do_connect.should == @service
       end
       
       it "logs in" do

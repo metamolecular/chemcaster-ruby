@@ -25,7 +25,7 @@ describe Index do
       ]
     end
     
-    describe "items" do
+    describe "item links" do
       before(:each) do
         @item_link = mock(Link)
         @items = [@item_link]
@@ -33,8 +33,8 @@ describe Index do
         do_new
       end
       
-      it "gives items" do
-        @index.items.should == @items
+      it "gives item links" do
+        @index.item_links.should == @items
       end
     end
     

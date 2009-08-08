@@ -3,18 +3,15 @@ require 'chemcaster/representation'
 module Chemcaster
   class Item < Representation    
     def index
-      raise LinkNotDefined.new("link 'index' not defined by server") unless @index
-      @index.get
+      @index_link.get
     end
     
     def update representation
-      raise LinkNotDefined.new("link 'update' not defined by server") unless @update
-      @update.put representation
+      @update_link.put representation
     end
     
     def destroy
-      raise LinkNotDefined.new("link 'destroy' not defined by server") unless @destroy
-      @destroy.delete
+      @destroy_link.delete
     end
     
     protected
@@ -23,7 +20,7 @@ module Chemcaster
       super
       
       ['index', 'update', 'destroy'].each do |action|
-        instance_variable_set("@#{action}".to_sym, Link.new(hash[action])) if hash[action]
+        instance_variable_set("@#{action}_link".to_sym, Link.new(hash[action]))
       end
     end
   end

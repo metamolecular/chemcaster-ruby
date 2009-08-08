@@ -34,6 +34,7 @@ describe Item do
       }
       @index_link = mock(Link, :get => nil)
       Link.stub!(:new).with(@hash['index']).and_return @index_link
+      Link.stub!(:new).with(nil).and_return mock(Link)
       do_new
     end
     
@@ -61,6 +62,7 @@ describe Item do
       }
       @update_link = mock(Link, :put => nil)
       Link.stub!(:new).with(@hash['update']).and_return @update_link
+      Link.stub!(:new).with(nil).and_return mock(Link)
       do_new
     end
     
@@ -89,6 +91,7 @@ describe Item do
       }
       @destroy_link = mock(Link, :delete => nil)
       Link.stub!(:new).with(@hash['destroy']).and_return @destroy_link
+      Link.stub!(:new).with(nil).and_return(mock(Link))
       do_new
     end
     

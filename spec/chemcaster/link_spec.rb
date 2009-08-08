@@ -9,17 +9,43 @@ describe Chemcaster::Link do
     @link = Link.new({'name' => @name, 'uri' => @uri, 'media_type' => @media_name})
   end
   
+  def mock_login
+    @user = 'joe@example.com'
+    @pass = 'secret'
+    @login = mock(Login, :user => @user, :password => @pass)
+    Login.stub!(:instance).and_return @login
+  end
+  
+  describe "with nil attributes" do
+    before(:each) do
+      @link = Link.new nil
+    end
+    
+    it "raises with get" do
+      lambda{@link.get}.should raise_error(LinkNotDefined)
+    end
+    
+    it "raises with put" do
+      lambda{@link.put(mock(Object))}.should raise_error(LinkNotDefined)
+    end
+    
+    it "raises with post" do
+      lambda{@link.post(mock(Object))}.should raise_error(LinkNotDefined)
+    end
+    
+    it "raises with delete" do
+      lambda{@link.delete}.should raise_error(LinkNotDefined)
+    end
+  end
+  
   describe "with valid attributes" do
     before(:each) do
-      @user = 'joe@example.com'
-      @pass = 'secret'
       @name = 'foo'
       @uri = 'http://example.com'
       @media_name = 'text/plain'
       @media_class = mock(Class, :mime_type => 'application/foo')
       @client = mock(RestClient::Resource, :get => nil, :put => nil)
-      @login = mock(Login, :user => @user, :password => @pass)
-      Login.stub!(:instance).and_return @login
+      mock_login
       RestClient::Resource.stub!(:new).and_return(@client)
       MediaType.stub!(:representation).and_return @media_class
     end

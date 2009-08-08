@@ -13,9 +13,14 @@ describe Service do
     before(:each) do
       @link_hash = mock_link_hash
       @hash['registries'] = @link_hash
-      @registries = mock(Link)
-      Link.stub!(:new).with(@link_hash).and_return(@registries)
+      @registries = mock(Index)
+      @registries_link = mock(Link, :get => @registries)
+      Link.stub!(:new).with(@link_hash).and_return(@registries_link)
       do_new
+    end
+    
+    it "returns registries link" do
+      @service.registries_link.should == @registries_link
     end
     
     it "returns registries" do
