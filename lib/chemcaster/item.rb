@@ -18,8 +18,9 @@ module Chemcaster
       @destroy_link.delete
     end
     
-    def self.attributes *atts
-      atts.each do |m|
+    def self.attributes *attribute_ids
+      attribute_ids.each do |m|
+        @@attribute_ids << m.to_s
         define_method(m) do
           attributes[m.to_s]
         end        
@@ -44,15 +45,20 @@ module Chemcaster
     def load_hash hash
       super
       
+      if hash[name = self.class.to_s.gsub(/Chemcaster::/, '').downcase]
+        hash[name].each do |attribute|
+          if @@attribute_ids.member? attribute[0]
+            attributes[attribute[0]] = attribute[1]
+          end
+        end
+      end
+            
       ['index', 'update', 'destroy'].each do |action|
         instance_variable_set("@#{action}_link".to_sym, Link.new(hash[action]))
       end
       
-      name = self.class.to_s.gsub(/Chemcaster::/, '').downcase
-      attributes.merge!(hash[name]) if hash[name]
-      
-      @@resource_ids.each do |resource|
-        instance_variable_set("@#{resource}_link".to_sym, Link.new(hash[resource.to_s]))
+      @@resource_ids.each do |resource_id|
+        instance_variable_set("@#{resource_id}_link".to_sym, Link.new(hash[resource_id.to_s]))
       end
     end
   end
