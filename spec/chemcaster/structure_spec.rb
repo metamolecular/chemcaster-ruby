@@ -20,7 +20,7 @@ describe Structure do
     end
     
     it "returns hash" do
-      @structure.to_hash.should == {'name' => @name, 'molfile' => nil}
+      @structure.to_hash.should == {'name' => @name}
     end
     
     it "returns name" do
@@ -38,8 +38,8 @@ describe Structure do
       do_new
     end
     
-    it "returns molfile" do
-      @structure.to_hash.should == {'molfile' => @molfile, 'name' => nil}
+    it "to_hash returns molfile" do
+      @structure.to_hash.should == {'molfile' => @molfile}
     end
     
     it "returns name" do
