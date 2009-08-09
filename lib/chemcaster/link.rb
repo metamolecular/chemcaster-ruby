@@ -29,13 +29,13 @@ module Chemcaster
       validate
       response = decode @client.post(encode(representation),
         :accept => @media_type, :content_type => @media_type)
-      @media_class.new response
+      @media_class.new self, response
     end
     
     def delete
       validate
       response = decode @client.delete(:accept => @media__type)
-      @media_class.new response
+      @media_class.new self, response
     end
     
     private
@@ -50,7 +50,7 @@ module Chemcaster
     
     def encode representation
       name = representation.class.to_s.gsub(/Chemcaster::/, '').downcase
-      JSON(name => representation.to_hash)
+      JSON(name => representation.attributes)
     end
   end
 end

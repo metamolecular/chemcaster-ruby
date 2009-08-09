@@ -5,11 +5,11 @@ module Chemcaster
     resources :index
     
     def update representation
-      link.put representation
+      resource_link.put representation
     end
     
     def destroy
-      link.delete
+      resource_link.delete
     end
   end
 end

@@ -50,6 +50,12 @@ describe Item do
   
   describe "update" do
     before(:each) do
+      @hash['resource'] = {
+        'name' => 'resource'
+      }
+      @resource_link = mock(Link, :put => true)
+      Link.stub!(:new).with(@hash['resource']).and_return @resource_link
+      Link.stub!(:new).with(nil).and_return mock(Link)
       do_new
     end
     
@@ -59,7 +65,7 @@ describe Item do
       end
       
       it "puts to link" do
-        @link.should_receive(:put).with(@new_item)
+        @resource_link.should_receive(:put).with(@new_item)
         @item.update @new_item
       end
     end
@@ -67,6 +73,12 @@ describe Item do
   
   describe "destroy" do
     before(:each) do
+      @hash['resource'] = {
+        'name' => 'resource'
+      }
+      @resource_link = mock(Link, :delete => true)
+      Link.stub!(:new).with(@hash['resource']).and_return @resource_link
+      Link.stub!(:new).with(nil).and_return mock(Link)
       do_new
     end
     
@@ -76,7 +88,7 @@ describe Item do
       end
       
       it "deleltes to link" do
-        @link.should_receive(:delete)
+        @resource_link.should_receive(:delete)
         @item.destroy
       end
     end

@@ -12,11 +12,11 @@ describe Index do
   
   describe "with all valid attributes" do
     before(:each) do
-      @hash['create'] = {
-        'name' => 'create Foo',
-        'uri' => 'http://foo.com',
-        'media_type' => 'text/foo'
-      }
+      #      @hash['create'] = {
+      #        'name' => 'create Foo',
+      #        'uri' => 'http://foo.com',
+      #        'media_type' => 'text/foo'
+      #      }
       @hash['items'] = [
         {
           'name' => 'items listing',
@@ -38,23 +38,32 @@ describe Index do
         @index.item_links.should == @items
       end
     end
-    
-    describe "create" do
-      before(:each) do
-        @item = mock(Item)
-        Link.stub!(:new).and_return(@create)
-        do_new
-      end
+  end
+  
+  describe "create" do
+    before(:each) do
+      @hash['resource'] = {
+        'name' => 'resource'
+      }
+      @hash['items'] = [
+        {
+          'name' => 'items listing',
+          'uri' => 'http://foo.com',
+          'media_type' => 'text/foo'
+        }
+      ]
+      @resource_link = mock(Link, :post => true)
+      Link.stub!(:new).with(@hash['resource']).and_return @resource_link
+      Link.stub!(:new).with(@hash['items'][0]).and_return mock(Link)
+      @item = mock(Item)
+      do_new
+    end
       
-      describe "when successful" do
-        before(:each) do
-          @link.stub!(:post).and_return(@new_item)
-        end
+    describe "when successful" do
         
-        it "posts representation to link" do
-          @link.should_receive(:post).with(@item)
-          @index.create(@item)
-        end
+      it "posts representation to link" do
+        @resource_link.should_receive(:post).with(@item)
+        @index.create(@item)
       end
     end
   end

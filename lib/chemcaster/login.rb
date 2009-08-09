@@ -1,5 +1,7 @@
 module Chemcaster
   @@instance = nil
+  @@user = nil
+  @@pass = nil
   
   class Login
     def self.login user, password

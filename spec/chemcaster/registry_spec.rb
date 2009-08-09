@@ -19,10 +19,6 @@ describe Registry do
       do_new
     end
     
-    it "returns hash" do
-      @registry.to_hash.should == {'name' => @name}
-    end
-    
     it "returns name" do
       @registry.name.should == @name
     end

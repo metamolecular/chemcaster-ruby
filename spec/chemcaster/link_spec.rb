@@ -93,7 +93,7 @@ describe Chemcaster::Link do
         before(:each) do
           @response = "{}"
           @representation = mock(Object)
-          @new_representation = mock(Object, :to_hash => {})
+          @new_representation = mock(Object, :attributes => {})
           @media_class.stub!(:new).with(@link, JSON(@response)).and_return(@representation)
           @client.stub!(:put).and_return @response
         end
@@ -118,8 +118,8 @@ describe Chemcaster::Link do
         before(:each) do
           @response = "{}"
           @representation = mock(Representation)
-          @new_representation = mock(Representation, :to_hash => {})
-          @media_class.stub!(:new).with(JSON(@response)).and_return(@representation)
+          @new_representation = mock(Representation, :attributes => {})
+          @media_class.stub!(:new).with(@link, JSON(@response)).and_return(@representation)
           @client.stub!(:post).and_return @response
           @new_representation.stub!(:class).and_return(Representation)
         end
@@ -130,7 +130,7 @@ describe Chemcaster::Link do
         end
         
         it "creates the representation from response" do
-          @media_class.should_receive(:new).with(JSON(@response))
+          @media_class.should_receive(:new).with(@link, JSON(@response))
           @link.post(@new_representation)
         end
         
@@ -154,7 +154,7 @@ describe Chemcaster::Link do
         end
         
         it "creates the representation from response" do
-          @media_class.should_receive(:new).with(JSON(@response))
+          @media_class.should_receive(:new).with(@link, JSON(@response))
           @link.delete
         end
         
