@@ -1,6 +1,7 @@
 require 'chemcaster/service'
 require 'chemcaster/registry'
 require 'chemcaster/structure'
+require 'chemcaster/query'
 require 'chemcaster/link'
 require 'chemcaster/index'
 require 'chemcaster/item'

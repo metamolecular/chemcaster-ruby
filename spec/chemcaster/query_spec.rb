@@ -1,40 +1,25 @@
 require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
 
-describe Structure do
+describe Query do
   before(:each) do
     @hash = {}
   end
   
   def do_new
-    @structure = Structure.new mock(Link), @hash
-  end
-  
-  describe "with a name" do
-    before(:each) do
-      @name = 'foo'
-      @hash['structure'] = {
-        'name' => @name
-      }
-      do_new
-    end
-    
-    it "returns name" do
-      @structure.name.should == @hash['structure']['name']
-    end
+    @query = Query.new mock(Link), @hash
   end
   
   describe "with a molfile" do
     before(:each) do
       @molfile = 'foo'
-      @structure = {
+      @hash['query'] = {
         'molfile' => @molfile
       }
-      @hash['structure'] = @structure
       do_new
     end
     
     it "returns name" do
-      @structure.molfile.should == @molfile
+      @query.molfile.should == @molfile
     end
   end
   
@@ -48,8 +33,8 @@ describe Structure do
       do_new
     end
       
-    it "returns structures index" do
-      @structure.images.should == @images
+    it "returns query images" do
+      @query.images.should == @images
     end
   end
 end
