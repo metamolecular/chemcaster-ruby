@@ -10,60 +10,46 @@ describe Index do
     @index = Index.new @link, @hash
   end
   
-  describe "with all valid attributes" do
+  describe "with create link data" do
     before(:each) do
-      #      @hash['create'] = {
-      #        'name' => 'create Foo',
-      #        'uri' => 'http://foo.com',
-      #        'media_type' => 'text/foo'
-      #      }
-      @hash['items'] = [
-        {
-          'name' => 'items listing',
-          'uri' => 'http://foo.com',
-          'media_type' => 'text/foo'
-        }
-      ]
+      @hash['items'] = []
+      @hash['create'] = {
+        'name' => 'create Foo',
+        'uri' => 'http://foo.com',
+        'media_type' => 'text/foo'
+      }
+      @create_link = mock(Link)
+      Link.stub!(:new).with(@hash['create']).and_return @create_link
     end
     
-    describe "item links" do
+    describe "creating" do
       before(:each) do
-        @item_link = mock(Link)
-        @items = [@item_link]
-        Link.stub!(:new).and_return @item_link
+        @representation = mock(Object)
         do_new
       end
       
-      it "gives item links" do
-        @index.item_links.should == @items
+      it "sends post to create link" do
+        @create_link.should_receive(:post).with(@representation)
+        @index.create @representation
       end
     end
-  end
-  
-  describe "create" do
-    before(:each) do
-      @hash['resource'] = {
-        'name' => 'resource'
-      }
-      @hash['items'] = [
-        {
-          'name' => 'items listing',
-          'uri' => 'http://foo.com',
-          'media_type' => 'text/foo'
-        }
-      ]
-      @resource_link = mock(Link, :post => true)
-      Link.stub!(:new).with(@hash['resource']).and_return @resource_link
-      Link.stub!(:new).with(@hash['items'][0]).and_return mock(Link)
-      @item = mock(Item)
-      do_new
-    end
-      
-    describe "when successful" do
-        
-      it "posts representation to link" do
-        @resource_link.should_receive(:post).with(@item)
-        @index.create(@item)
+    
+    describe "and item links" do
+      before(:each) do
+        @hash['items'] = [
+          {
+            'name' => 'items listing',
+            'uri' => 'http://foo.com',
+            'media_type' => 'text/foo'
+          }
+        ]
+        @item_link = mock(Link)
+        Link.stub!(:new).and_return @item_link
+      end
+          
+      it "gives item link" do
+        do_new
+        @index.item_links.should == [@item_link]
       end
     end
   end

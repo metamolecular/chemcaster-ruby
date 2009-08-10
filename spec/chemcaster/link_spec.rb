@@ -153,6 +153,11 @@ describe Chemcaster::Link do
           @client.stub!(:delete).and_return @response
         end
         
+        it "uses content type" do
+          @client.should_receive(:delete).with(:accept => @media_name)
+          @link.delete
+        end
+        
         it "creates the representation from response" do
           @media_class.should_receive(:new).with(@link, JSON(@response))
           @link.delete

@@ -5,11 +5,20 @@ module Chemcaster
     resources :index
     
     def update representation
-      resource_link.put representation
+      @update_link.put representation
     end
     
     def destroy
-      resource_link.delete
+      @destroy_link.delete
+    end
+    
+    protected
+    
+    def load_hash atts
+      super
+      
+      @update_link = Link.new atts['update']
+      @destroy_link = Link.new atts['destroy']
     end
   end
 end

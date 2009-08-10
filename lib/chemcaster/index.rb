@@ -5,7 +5,7 @@ module Chemcaster
     attr_accessor :item_links
     
     def create representation
-      resource_link.post representation
+      @create_link.post representation
     end
     
     protected
@@ -13,6 +13,7 @@ module Chemcaster
     def load_hash atts
       super
 
+      @create_link = Link.new atts['create']
       @item_links = atts['items'].inject([]) do |result, atts|
         result << Link.new(atts)
       end

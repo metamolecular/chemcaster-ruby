@@ -6,7 +6,6 @@ module Chemcaster
 
     attr_accessor :attributes
     attr_accessor :link
-    attr_accessor :resource_link
     
     def initialize link, raw
       @link = link
@@ -29,7 +28,9 @@ module Chemcaster
     end
     
     def self.resources *res
-      self.resource_ids ||= []
+#      puts "#{self} add resource: #{res}"
+      self.resource_ids ||= self.superclass.resource_ids || []
+#      self.resource_ids ||= []
       res.each do |id|
         self.resource_ids << id
         define_method(id) do  
@@ -49,9 +50,9 @@ module Chemcaster
           end
         end
       end
-
-      @resource_link = Link.new(hash['resource'])
       
+#      puts "loading resources for #{self.class}"
+#      puts self.class.resource_ids
       self.class.resource_ids ||= []
       self.class.resource_ids.each do |resource_id|
         instance_variable_set("@#{resource_id}_link".to_sym, Link.new(hash[resource_id.to_s]))

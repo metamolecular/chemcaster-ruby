@@ -34,7 +34,7 @@ module Chemcaster
     
     def delete
       validate
-      response = decode @client.delete(:accept => @media__type)
+      response = decode @client.delete(:accept => @media_type)
       @media_class.new self, response
     end
     

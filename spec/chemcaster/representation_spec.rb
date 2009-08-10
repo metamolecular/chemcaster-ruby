@@ -13,8 +13,4 @@ describe Representation do
     Link.stub!(:new).and_return @resource_link
     @rep=Representation.new(mock(Link), @hash)
   end
-  
-  it "has the correct resource link" do
-    @rep.resource_link.should == @resource_link
-  end
 end
