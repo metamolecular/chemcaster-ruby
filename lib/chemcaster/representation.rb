@@ -28,9 +28,7 @@ module Chemcaster
     end
     
     def self.resources *res
-#      puts "#{self} add resource: #{res}"
       self.resource_ids ||= self.superclass.resource_ids || []
-#      self.resource_ids ||= []
       res.each do |id|
         self.resource_ids << id
         define_method(id) do  
@@ -39,20 +37,25 @@ module Chemcaster
       end
     end
     
-        
+    def to_json
+      JSON({attributes_name => @attributes})
+    end
+    
     protected
     
+    def attributes_name
+      self.class.to_s.gsub(/Chemcaster::/, '').downcase
+    end
+    
     def load_hash hash
-      if hash[name = self.class.to_s.gsub(/Chemcaster::/, '').downcase]
+      if hash[name = attributes_name]
         hash[name].each do |attribute|
           if self.class.attribute_ids.member? attribute[0]
             attributes[attribute[0]] = attribute[1]
           end
         end
       end
-      
-#      puts "loading resources for #{self.class}"
-#      puts self.class.resource_ids
+
       self.class.resource_ids ||= []
       self.class.resource_ids.each do |resource_id|
         instance_variable_set("@#{resource_id}_link".to_sym, Link.new(hash[resource_id.to_s]))

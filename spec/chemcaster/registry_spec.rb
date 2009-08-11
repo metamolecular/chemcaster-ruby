@@ -16,6 +16,7 @@ describe Registry do
         'name' => @name
       }
       @hash['registry'] = @registry
+      Link.stub!(:new).and_return mock(Link)
       do_new
     end
     
