@@ -12,5 +12,4 @@ require 'chemcaster/login'
 require 'chemcaster/error'
 
 require 'rubygems'
-require 'restclient'
 require 'json'
