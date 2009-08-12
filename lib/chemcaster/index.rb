@@ -3,6 +3,7 @@ require 'chemcaster/representation'
 module Chemcaster
   class Index < Representation
     attr_accessor :item_links, :items
+    resources :parent
     
     def create representation
       @create_link.post representation

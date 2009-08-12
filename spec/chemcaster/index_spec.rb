@@ -20,6 +20,7 @@ describe Index do
       }
       @create_link = mock(Link)
       Link.stub!(:new).with(@hash['create']).and_return @create_link
+      Link.stub!(:new).with(nil).and_return mock(Link)
     end
     
     describe "creating" do
@@ -31,6 +32,22 @@ describe Index do
       it "sends post to create link" do
         @create_link.should_receive(:post).with(@representation)
         @index.create @representation
+      end
+    end
+    
+    describe "and parent resource" do
+      before(:each) do
+        @hash['parent'] = {
+          'name' => 'parent'
+        }
+        @parent_link = mock(Link)
+        Link.stub!(:new).with(@hash['parent']).and_return @parent_link
+        do_new
+      end
+      
+      it "sends get to parent link" do
+        @parent_link.should_receive(:get)
+        @index.parent
       end
     end
     
