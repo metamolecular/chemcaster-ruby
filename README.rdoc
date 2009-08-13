@@ -9,8 +9,8 @@ search.
 
 === Connecting to the Service
 
-require 'lib/chemcaster'
-include Chemcaster
+   require 'lib/chemcaster'
+   include Chemcaster
 
 service = Service.connect 'username', 'password'
 
@@ -21,7 +21,8 @@ service = Service.connect 'username', 'password'
 
    service = Service.connect 'username', 'password'
    registries = service.registries
-   registry = registries.items[0]
+   registries.size # => 3
+   registry = registries[0]
 
 === Creating a Registry
 
