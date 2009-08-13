@@ -16,19 +16,19 @@ service = Service.connect 'username', 'password'
 
 === Loading a Registry
 
-require 'lib/chemcaster'
-include Chemcaster
+   require 'lib/chemcaster'
+   include Chemcaster
 
-service = Service.connect 'username', 'password'
-registries = service.registries
-registry = registries.items[0]
+   service = Service.connect 'username', 'password'
+   registries = service.registries
+   registry = registries.items[0]
 
 === Creating a Registry
 
-require 'lib/chemcaster'
-include Chemcaster
+   require 'lib/chemcaster'
+   include Chemcaster
 
-service = Service.connect 'username', 'password'
-registries = service.registries
+   service = Service.connect 'username', 'password'
+   registries = service.registries
 
-registries.create :name => 'CarboBlocks, Inc.'
+   registries.create :name => 'CarboBlocks, Inc.'
