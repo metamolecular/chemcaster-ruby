@@ -12,7 +12,7 @@ search.
    require 'lib/chemcaster'
    include Chemcaster
 
-service = Service.connect 'username', 'password'
+   service = Service.connect 'username', 'password'
 
 === Loading a Registry
 
