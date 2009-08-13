@@ -1,8 +1,8 @@
 = Chemcaster Ruby API
 
 This is the Ruby interface for the Chemcaster[http://chemcaster.com] RESTful Web
-API. It consists of basic functionality needed to begin building
-applications that require chemical structure registration, storage, imaging, and
+API. It consists of basic functionality needed to create
+applications using chemical structure registration, storage, imaging, and
 search.
 
 == Example Use
