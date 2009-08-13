@@ -1,6 +1,7 @@
 require 'net/http'
+require 'net/https'
 
-module Chemcaster
+module Chemcaster  
   class Link
     def initialize atts=nil
       if atts
@@ -14,12 +15,12 @@ module Chemcaster
       do_http 'get'
     end
     
-    def put representation
-      do_http 'put', representation
+    def put attributes
+      do_http 'put', attributes
     end
 
-    def post representation
-      do_http 'post', representation
+    def post attributes
+      do_http 'post', attributes
     end
     
     def delete
@@ -31,13 +32,34 @@ module Chemcaster
     def do_http method, representation=nil
       validate
       request = request_for_method method, representation
-      response=Net::HTTP.new(@uri.host,@uri.port).start {|http| http.request(request)}
-      
+      response = send_request request
+
       raise(HTTPError, response) unless response.code.to_i < 300
       @media_class.new self, decode(response.body)
     end
     
-    def request_for_method method, representation=nil
+    def send_request request
+      http = Net::HTTP.new(@uri.host, @uri.port)
+      http.use_ssl = (@uri.scheme == 'https')
+      
+      if File.exists? Service.root_ca
+        http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+        http.ca_path = Service.root_ca
+      else
+        message =
+          "net/http couldn't locate this system's root SSL certificate files."+
+          "On Debian Linux systems, these files are located at /etc/ssl/certs "+
+          "(this library's default). For more information, see:\n\n"+
+          "http://codeidol.com/other/rubyckbk/Internet-Services/Making-an-HTTPS-Web-Request\n"+
+          "http://redcorundum.blogspot.com/2008/03/ssl-certificates-and-nethttps.html\n"+
+          "http://notetoself.vrensk.com/2008/09/verified-https-in-ruby\n"
+        raise(message)
+      end
+      
+      http.request(request)
+    end
+    
+    def request_for_method method, attributes=nil
       request = case method
       when "get" then Net::HTTP::Get.new(@uri.path)
       when "put" then Net::HTTP::Put.new(@uri.path)
@@ -46,10 +68,10 @@ module Chemcaster
       end
       
       request['accept'] = @media_type
-      request.basic_auth Login.instance.user, Login.instance.password
+      request.basic_auth Service.username, Service.password
       
-      if representation
-        request.body = representation.to_json
+      if attributes
+        request.body = {MediaType.hash_key(@media_type) => attributes}.to_json
         request.content_type = @media_type
       end
       

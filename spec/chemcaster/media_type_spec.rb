@@ -6,6 +6,10 @@ describe MediaType do
       @registry = MediaType.representation @media_type
     end
     
+    def do_hash_key
+      @key = MediaType.hash_key @media_type
+    end
+    
     describe "with application/vnd.com.chemcaster.Registry+json" do
       before(:each) do
         @media_type = "application/vnd.com.chemcaster.Registry+json"
@@ -13,6 +17,10 @@ describe MediaType do
       
       it "returns a Registry" do
         do_representation.should == Registry
+      end
+      
+      it "returns hash name" do
+        do_hash_key.should == 'registry'
       end
     end
     

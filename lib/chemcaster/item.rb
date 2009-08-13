@@ -1,11 +1,11 @@
-require 'chemcaster/representation'
+require File.dirname(__FILE__) + '/../chemcaster/representation'
 
 module Chemcaster
   class Item < Representation
     resources :index
     
-    def update representation
-      @update_link.put representation
+    def update representation_attributes
+      @update_link.put representation_attributes
     end
     
     def destroy

@@ -9,6 +9,29 @@ describe Service do
     @service = Service.new mock(Link), @hash
   end
   
+  describe "connnect" do
+    before(:each) do
+      @username = 'foo@example.com'
+      @password = 'secret'
+    end
+    
+    def do_connect
+      Service.connect(@username, @password)
+    end
+    
+    describe "when successful" do
+      before(:each) do
+        @service = mock(Service)
+        @link = mock(Link, :get => @service)
+        Link.stub!(:new).and_return @link
+      end
+      
+      it "returns link" do
+        do_connect.should == @service
+      end
+    end
+  end
+  
   describe "with registries" do
     before(:each) do
       @link_hash = mock_link_hash

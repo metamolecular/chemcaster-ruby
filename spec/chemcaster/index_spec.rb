@@ -25,13 +25,13 @@ describe Index do
     
     describe "creating" do
       before(:each) do
-        @representation = mock(Object)
+        @atts = {'name' => 'foo'}
         do_new
       end
       
       it "sends post to create link" do
-        @create_link.should_receive(:post).with(@representation)
-        @index.create @representation
+        @create_link.should_receive(:post).with(@atts)
+        @index.create @atts
       end
     end
     
@@ -60,13 +60,24 @@ describe Index do
             'media_type' => 'text/foo'
           }
         ]
-        @item_link = mock(Link)
+        @item = mock(Item)
+        @item_link = mock(Link, :get => @item)
         Link.stub!(:new).and_return @item_link
       end
           
       it "gives item link" do
         do_new
         @index.item_links.should == [@item_link]
+      end
+      
+      it "has size" do
+        do_new
+        @index.size.should == 1
+      end
+      
+      it "fetches item" do
+        do_new
+        @index[0].should == @item
       end
     end
   end

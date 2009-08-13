@@ -1,12 +1,20 @@
-require 'chemcaster/representation'
+require File.dirname(__FILE__) + '/../chemcaster/representation'
 
 module Chemcaster
   class Index < Representation
     attr_accessor :item_links, :items
     resources :parent
     
-    def create representation
-      @create_link.post representation
+    def create representation_attributes
+      @create_link.post representation_attributes
+    end
+    
+    def size
+      @item_links.size
+    end
+    
+    def [](index)
+      @item_links[index].get
     end
     
     protected

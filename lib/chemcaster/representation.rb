@@ -41,13 +41,14 @@ module Chemcaster
       JSON({attributes_name => @attributes})
     end
     
-    protected
-    
     def attributes_name
       self.class.to_s.gsub(/Chemcaster::/, '').downcase
     end
     
+    protected
+    
     def load_hash hash
+      self.class.attribute_ids ||= []
       if hash[name = attributes_name]
         hash[name].each do |attribute|
           if self.class.attribute_ids.member? attribute[0]

@@ -4,13 +4,15 @@ describe Chemcaster::Link do
   def login
     @user = 'joe@example.com'
     @pass = 'secret'
-    @login = mock(Login, :user => @user, :password => @pass)
-    Login.stub!(:instance).and_return @login
+    Service.stub!(:username).and_return(@user)
+    Service.stub!(:password).and_return(@pass)
+    Service.stub!(:root_ca).and_return 'foo'
+    File.stub!(:exists?).with(Service.root_ca).and_return true
   end
   
   def mock_uri
     @uri_string = 'http://example.com/foo'
-    @uri = mock(URI, :host => 'example.com', :path => '/foo', :port => 80)
+    @uri = mock(URI, :host => 'example.com', :path => '/foo', :port => 80, :scheme => 'https')
     URI.stub!(:parse).and_return @uri
   end
   
@@ -43,11 +45,13 @@ describe Chemcaster::Link do
   def mock_media_type
     @media_name = 'text/plain'
     @media_class = mock(Class, :mime_type => 'application/foo')
-    MediaType.stub!(:representation).and_return @media_class    
+    @media_key = 'foo'
+    MediaType.stub!(:representation).and_return @media_class
+    MediaType.stub!(:hash_key).and_return(@media_key)    
   end
   
   def mock_http
-    @http = mock(Net::HTTP)
+    @http = mock(Net::HTTP, :use_ssl= => true, :verify_mode= => true, :ca_path= => true)
     @http.stub!(:start).and_yield(@http)
     @http.stub!(:request).with(@request).and_return @response
     Net::HTTP.stub!(:new).and_return @http
@@ -91,7 +95,7 @@ describe Chemcaster::Link do
   
   describe "http send representation", :shared => true do
     it "sets request body" do
-      @request.should_receive(:body=).with(@new_representation.to_json)
+      @request.should_receive(:body=).with({@media_key => @new_representation_attributes}.to_json)
       @action.call
     end
     
@@ -113,9 +117,9 @@ describe Chemcaster::Link do
   
   describe "put" do
     before(:each) do
-      @new_representation = mock(Representation, :attributes => {})
+      @new_representation_attributes = mock(Representation, :attributes => {})
       @method = "put"
-      @action = lambda{@link.put @new_representation}
+      @action = lambda{@link.put @new_representation_attributes}
       setup_http
     end
     
@@ -125,9 +129,9 @@ describe Chemcaster::Link do
   
   describe "post" do
     before(:each) do
-      @new_representation = mock(Representation, :attributes => {})
+      @new_representation_attributes = {:foo => 'bar'}
       @method = "post"
-      @action = lambda{@link.post @new_representation}
+      @action = lambda{@link.post @new_representation_attributes}
       setup_http
     end
     

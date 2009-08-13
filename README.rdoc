@@ -3,4 +3,32 @@
 This is the Ruby interface for the Chemcaster[http://chemcaster.com] RESTful Web
 API. It consists of basic functionality needed to begin building
 applications that require chemical structure registration, storage, imaging, and
-search in Ruby.
+search.
+
+== Example Use
+
+=== Connecting to the Service
+
+require 'lib/chemcaster'
+include Chemcaster
+
+service = Service.connect 'username', 'password'
+
+=== Loading a Registry
+
+require 'lib/chemcaster'
+include Chemcaster
+
+service = Service.connect 'username', 'password'
+registries = service.registries
+registry = registries.items[0]
+
+=== Creating a Registry
+
+require 'lib/chemcaster'
+include Chemcaster
+
+service = Service.connect 'username', 'password'
+registries = service.registries
+
+registries.create :name => 'CarboBlocks, Inc.'
