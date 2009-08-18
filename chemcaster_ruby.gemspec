@@ -1,4 +1,4 @@
-require 'rubygems'
+#require 'rubygems'
 
 Gem::Specification.new do |s|
   s.name = %q{chemcaster}
