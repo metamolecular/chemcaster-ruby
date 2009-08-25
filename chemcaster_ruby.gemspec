@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
   s.has_rdoc = false
   s.homepage = %q{http://chemcaster.com}
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.0}
+  s.rubygems_version = %q{1.3.5}
   s.summary = %q{A hypertext-driven Ruby client for the Chemcaster cheminformatics Web services platform.}
   s.add_dependency("json", ">=1.1.4")
 end
