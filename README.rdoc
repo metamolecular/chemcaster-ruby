@@ -43,3 +43,12 @@ Installation through the Ruby Gem hosted on GitHub is recommended:
    registries = service.registries
 
    registries.create :name => 'CarboBlocks, Inc.'
+
+=== Changing a Registry Name
+
+   require 'rubygems'
+   require 'chemcaster'
+
+   service = Chemcaster::Service.connect 'username', 'password'
+   registry = service.registries[0]
+   registry.update :name => 'CarboBlocks International, Inc.'
