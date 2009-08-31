@@ -86,3 +86,9 @@ when accessing resources.
    service = Chemcaster::Service.connect 'username', 'password'
    registry = service.registries[0]
    registry.update :name => 'CarboBlocks International, Inc.'
+
+
+== API Documentation
+
+RDoc documentation is available at
+{rdoc.info}[http://rdoc.info/projects/metamolecular/chemcaster-ruby].
