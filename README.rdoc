@@ -58,7 +58,7 @@ More information can be found here:
 
    Chemcaster::Service.connect 'username', 'password'
 
-   link  =Chemcaster::Link.new 'name'=> 'foo',
+   link = Chemcaster::Link.new 'name'=> 'foo',
      'uri' => 'https://chemcaster.com/registries/123456',
      'media_type' => 'application/vnd.com.chemcaster.Registry+json'
    registry = link.get
