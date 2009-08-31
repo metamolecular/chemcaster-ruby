@@ -5,9 +5,9 @@ module Chemcaster
       raise "No such media type: #{name}" unless klass = $1
       
       begin
-        Object.const_get(klass)
+        Chemcaster.const_get("#{klass}")
       rescue
-        raise "No such class: #{klass}"
+        raise "Unable to create class from media type: #{name}"
       end
     end
     
