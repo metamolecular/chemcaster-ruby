@@ -1,4 +1,4 @@
-= Chemcaster Ruby API
+= Chemcaster[http://chemcaster.com] Ruby API
 
 This is the Ruby interface for the Chemcaster[http://chemcaster.com] RESTful Web
 API. It consists of basic functionality needed to create
@@ -24,7 +24,24 @@ Installation through the Ruby Gem hosted on GitHub is recommended:
 
    service = Chemcaster::Service.connect 'username', 'password'
 
-=== Loading a Registry
+Because Chemcaster[http://chemcaster.com] authenticates using SSL, you'll need to make sure the
+Ruby HTTP library can find the root SSL certificates on your system. On
+Debian Linux systems, these files are found in /etc/ssl/certs. This is
+also the default location used by the Chemcaster Ruby Client.
+
+To override the default SSL certificates path, pass the +root_ca+ option to the
++connect+ method:
+
+   service = Chemcaster::Service.connect 'username', 'password',
+     :root_ca => 'path/to/root_ssl_certs'
+
+More information can be found here:
+
+* {Making an HTTPS Web Request}[http://codeidol.com/other/rubyckbk/Internet-Services/Making-an-HTTPS-Web-Request]
+* {SSL Certificates and Net::HTTPS}[http://redcorundum.blogspot.com/2008/03/ssl-certificates-and-nethttps.html]
+* {Verified HTTPS in Ruby}[http://notetoself.vrensk.com/2008/09/verified-https-in-ruby]
+
+=== Loading a Registry from a Listing
 
    require 'rubygems'
    require 'chemcaster'
@@ -33,6 +50,23 @@ Installation through the Ruby Gem hosted on GitHub is recommended:
    registries = service.registries
    registries.size # => 3
    registry = registries[0]
+
+=== Loading a Registry from a URI
+
+   require 'rubygems'
+   require 'chemcaster'
+
+   Chemcaster::Service.connect 'username', 'password'
+
+   link  =Chemcaster::Link.new 'name'=> 'foo',
+     'uri' => 'https://chemcaster.com/registries/123456',
+     'media_type' => 'application/vnd.com.chemcaster.Registry+json'
+   registry = link.get
+
+Note: No assumptions should be made about Chemcaster[http://chemcaster.com] URI layout. Once
+you receive a resource URI, you can expect it to work at any point
+in the future for random-access. But URI templates are unnecessary
+when accessing resources.
 
 === Creating a Registry
 
