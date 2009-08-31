@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = %q{chemcaster-ruby}
-  s.version = "0.1.3"
+  s.version = "0.1.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Richard Apodaca"]
@@ -28,6 +28,5 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{A hypertext-driven Ruby client for the Chemcaster cheminformatics Web services platform. End.}
-#  s.add_dependency("json", ">=1.1.4")
-s.add_dependency('json_pure', [">= 0"])
+  s.add_dependency("json", ">=1.1.4")
 end
