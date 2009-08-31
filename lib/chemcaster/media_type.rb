@@ -16,7 +16,7 @@ module Chemcaster
       raise "No such media type: #{full_mime_type_name}" unless key = $1
       
       begin
-        Object.const_get(key)
+        Chemcaster.const_get(key)
       rescue
         raise "No such class: #{key}"
       end
