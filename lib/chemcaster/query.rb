@@ -1,6 +1,6 @@
 module Chemcaster
   class Query < Item
-    attributes :molfile
-    resources :images, :registry
+    attributes :serialization
+    resources :images, :registry, :executions
   end
 end
