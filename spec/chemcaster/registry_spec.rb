@@ -9,11 +9,12 @@ describe Registry do
     @registry = Registry.new mock(Link), @hash
   end
   
-  describe "with a name" do
+  describe "with a name and deletable" do
     before(:each) do
       @name = 'foo'
       @registry = {
-        'name' => @name
+        'name' => @name,
+        'deletable' => true
       }
       @hash['registry'] = @registry
       Link.stub!(:new).and_return mock(Link)
@@ -22,6 +23,10 @@ describe Registry do
     
     it "returns name" do
       @registry.name.should == @name
+    end
+    
+    it "returns deletable" do
+      @registry.deletable.should == true
     end
   end
   
@@ -52,6 +57,21 @@ describe Registry do
     
     it "returns queries index" do
       @registry.queries.should == @queries
+    end
+  end
+  
+  describe "with substances link" do
+    before(:each) do
+      @substances = mock(Index)
+      @substances_link = mock(Link, :get => @substances)
+      @hash['substances'] = {'name' => 'foo'}
+      Link.stub!(:new).with(@hash['substances']).and_return @substances_link
+      Link.stub!(:new).with(nil).and_return mock(Link)
+      do_new
+    end
+    
+    it "returns queries index" do
+      @registry.substances.should == @substances
     end
   end
 end
