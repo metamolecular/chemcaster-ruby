@@ -47,8 +47,23 @@ describe Substance do
       do_new
     end
       
-    it "returns structures index" do
+    it "returns components index" do
       @substance.components.should == @components
+    end
+  end
+  
+    describe "with images link" do
+    before(:each) do
+      @images = mock(Index)
+      @images_link = mock(Link, :get => @images)
+      @hash['images'] = {'name' => 'foo'}
+      Link.stub!(:new).with(@hash['images']).and_return @images_link
+      Link.stub!(:new).with(nil).and_return mock(Link)
+      do_new
+    end
+      
+    it "returns components index" do
+      @substance.images.should == @images
     end
   end
   
@@ -62,7 +77,7 @@ describe Substance do
       do_new
     end
       
-    it "returns structures index" do
+    it "returns registry" do
       @substance.registry.should == @registry
     end
   end
