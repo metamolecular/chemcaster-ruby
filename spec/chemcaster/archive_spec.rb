@@ -1,18 +1,16 @@
 require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
 require File.expand_path(File.dirname(__FILE__) + "/representation_spec")
 
-describe Image do
+describe Archive do
   before(:each) do
-    @test_class = Image
+    @test_class = Archive
   end
   
   describe "attributes" do
     before(:each) do
       @attributes = {
-        'width' => 100,
-        'height' => 100,
-        'format' => 'image/png',
-        'data' => 'sdlfkjsdlfjlsdjf'
+        'done' => true,
+        'created_at' => Time.now
       }
     end
     it_should_behave_like "representation with all attributes"
@@ -21,7 +19,8 @@ describe Image do
   describe "resources" do
     before(:each) do
       @resources = {
-        'imageable' => mock(Structure)
+        'zipfile' => mock(Item),
+        'registry' => mock(Registry)
       }
     end
     it_should_behave_like "representation with all resources"

@@ -1,7 +1,9 @@
 require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
+require File.expand_path(File.dirname(__FILE__) + "/representation_spec")
 
 describe Service do
   before(:each) do
+    @test_class = Service
     @hash = {}
   end
   
@@ -32,29 +34,23 @@ describe Service do
     end
   end
   
-  describe "with registries" do
+  describe "with all attributes" do
     before(:each) do
-      @link_hash = mock_link_hash
-      @hash['registries'] = @link_hash
-      @registries = mock(Index)
-      @registries_link = mock(Link, :get => @registries)
-      Link.stub!(:new).and_return(@registries_link)
-      @hash['service'] = {
-        'version' => 'v1.0'
+      @attributes = {
+        'version' => '1.0.0'
       }
-      do_new
     end
     
-    it "returns registries link" do
-      @service.registries_link.should == @registries_link
+    it_should_behave_like "representation with all attributes"
+  end
+  
+  describe "with all links" do
+    before(:each) do
+      @resources = {
+        'registries' => mock(Index)
+      }
     end
-    
-    it "returns registries" do
-      @service.registries.should == @registries
-    end
-    
-    it "returns version" do
-      @service.version.should == 'v1.0'
-    end
+      
+    it_should_behave_like "representation with all resources"
   end
 end

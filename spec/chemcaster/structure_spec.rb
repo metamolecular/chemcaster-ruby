@@ -1,70 +1,29 @@
 require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
+require File.expand_path(File.dirname(__FILE__) + "/representation_spec")
 
 describe Structure do
   before(:each) do
-    @hash = {}
+    @test_class=Structure
   end
   
-  def do_new
-    @structure = Structure.new mock(Link), @hash
-  end
-  
-  describe "with an inchi" do
+  describe "attributes" do
     before(:each) do
-      @inchi = 'foo'
-      @hash['structure'] = {
-        'inchi' => @name
+      @attributes = {
+        'serialization' => 'foo',
+        'inchi' => 'bar'
       }
-      do_new
     end
-    
-    it "returns inchi" do
-      @structure.inchi.should == @hash['structure']['inchi']
-    end
+    it_should_behave_like "representation with all attributes"
   end
   
-  describe "with a serialization" do
+  describe "resources" do
     before(:each) do
-      @serialization = 'foo'
-      @structure = {
-        'serialization' => @serialization
+      @resources = {
+        'images' => mock(Index),
+        'components' => mock(Index),
+        'registry' => mock(Registry)
       }
-      @hash['structure'] = @structure
-      do_new
     end
-    
-    it "returns name" do
-      @structure.serialization.should == @serialization
-    end
-  end
-  
-  describe "with images link" do
-    before(:each) do
-      @images = mock(Index)
-      @images_link = mock(Link, :get => @images)
-      @hash['images'] = {'name' => 'foo'}
-      Link.stub!(:new).with(@hash['images']).and_return @images_link
-      Link.stub!(:new).with(nil).and_return mock(Link)
-      do_new
-    end
-      
-    it "returns structures index" do
-      @structure.images.should == @images
-    end
-  end
-  
-  describe "with components link" do
-    before(:each) do
-      @components = mock(Index)
-      @components_link = mock(Link, :get => @components)
-      @hash['components'] = {'name' => 'foo'}
-      Link.stub!(:new).with(@hash['components']).and_return @components_link
-      Link.stub!(:new).with(nil).and_return mock(Link)
-      do_new
-    end
-      
-    it "returns structures index" do
-      @structure.components.should == @components
-    end
+    it_should_behave_like "representation with all resources"
   end
 end

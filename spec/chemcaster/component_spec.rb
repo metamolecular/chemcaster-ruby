@@ -1,55 +1,27 @@
 require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
+require File.expand_path(File.dirname(__FILE__) + "/representation_spec")
 
 describe Component do
   before(:each) do
-    @hash = {}
+    @test_class = Component
   end
   
-  def do_new
-    @component = Component.new mock(Link), @hash
-  end
-  
-  describe "with multiplier" do
+    describe "attributes" do
     before(:each) do
-      @multiplier = 1.0
-      @hash['component'] = {
-        'multiplier' => @multiplier
+      @attributes = {
+        'multiplier' => 1.0
       }
-      do_new
     end
-    
-    it "returns nultiplier" do
-      @component.multiplier.should == @hash['component']['multiplier']
-    end
+    it_should_behave_like "representation with all attributes"
   end
   
-  describe "with structure link" do
+  describe "resources" do
     before(:each) do
-      @structure = mock(Item)
-      @structure_link = mock(Link, :get => @structure)
-      @hash['structure'] = {'name' => 'foo'}
-      Link.stub!(:new).with(@hash['structure']).and_return @structure_link
-      Link.stub!(:new).with(nil).and_return mock(Link)
-      do_new
+      @resources = {
+        'structure' => mock(Structure),
+        'substance' => mock(Substance)
+      }
     end
-      
-    it "returns components index" do
-      @component.structure.should == @structure
-    end
-  end
-  
-  describe "with substance link" do
-    before(:each) do
-      @substance = mock(Item)
-      @substance_link = mock(Link, :get => @substance)
-      @hash['substance'] = {'name' => 'foo'}
-      Link.stub!(:new).with(@hash['substance']).and_return @substance_link
-      Link.stub!(:new).with(nil).and_return mock(Link)
-      do_new
-    end
-      
-    it "returns components index" do
-      @component.substance.should == @substance
-    end
+    it_should_behave_like "representation with all resources"
   end
 end

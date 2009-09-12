@@ -1,70 +1,28 @@
 require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
+require File.expand_path(File.dirname(__FILE__) + "/representation_spec")
 
 describe Query do
   before(:each) do
-    @hash = {}
+    @test_class = Query
   end
   
-  def do_new
-    @query = Query.new mock(Link), @hash
-  end
-  
-  describe "with a serialization" do
+  describe "attributes" do
     before(:each) do
-      @serialization = 'foo'
-      @hash['query'] = {
-        'serialization' => @serialization
+      @attributes = {
+        'serialization' => 'foo'
       }
-      do_new
     end
-    
-    it "returns name" do
-      @query.serialization.should == @serialization
-    end
+    it_should_behave_like "representation with all attributes"
   end
   
-  describe "with registry link" do
+  describe "resources" do
     before(:each) do
-      @registry = mock(Item)
-      @registry_link = mock(Link, :get => @registry)
-      @hash['registry'] = {'name' => 'foo'}
-      Link.stub!(:new).with(@hash['registry']).and_return @registry_link
-      Link.stub!(:new).with(nil).and_return mock(Link)
-      do_new
+      @resources = {
+        'images' => mock(Index),
+        'executions' => mock(Index),
+        'registry' => mock(Registry)
+      }
     end
-      
-    it "returns query images" do
-      @query.registry.should == @registry
-    end
-  end
-  
-  describe "with images link" do
-    before(:each) do
-      @images = mock(Index)
-      @images_link = mock(Link, :get => @images)
-      @hash['images'] = {'name' => 'foo'}
-      Link.stub!(:new).with(@hash['images']).and_return @images_link
-      Link.stub!(:new).with(nil).and_return mock(Link)
-      do_new
-    end
-      
-    it "returns query images" do
-      @query.images.should == @images
-    end
-  end
-  
-  describe "with executions link" do
-    before(:each) do
-      @executions = mock(Index)
-      @executions_link = mock(Link, :get => @executions)
-      @hash['executions'] = {'name' => 'foo'}
-      Link.stub!(:new).with(@hash['executions']).and_return @executions_link
-      Link.stub!(:new).with(nil).and_return mock(Link)
-      do_new
-    end
-      
-    it "returns query images" do
-      @query.executions.should == @executions
-    end
+    it_should_behave_like "representation with all resources"
   end
 end
