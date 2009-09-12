@@ -25,16 +25,16 @@ describe Structure do
   
   describe "with a molfile" do
     before(:each) do
-      @molfile = 'foo'
+      @serialization = 'foo'
       @structure = {
-        'molfile' => @molfile
+        'serialization' => @serialization
       }
       @hash['structure'] = @structure
       do_new
     end
     
     it "returns name" do
-      @structure.molfile.should == @molfile
+      @structure.serialization.should == @serialization
     end
   end
   

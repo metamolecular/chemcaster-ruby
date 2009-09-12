@@ -1,6 +1,6 @@
 module Chemcaster
   class Structure < Item
-    attributes :name, :molfile
+    attributes :name, :serialization
     resources :images, :registry
   end
 end

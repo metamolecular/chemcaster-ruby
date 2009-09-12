@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + '/../chemcaster/representation'
 
 module Chemcaster
   class Service < Representation
+    attributes :version
     attr_accessor :registries_link
     
     # Ruby SSL needs to be told the location of the system's SSL CA files.

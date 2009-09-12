@@ -39,6 +39,9 @@ describe Service do
       @registries = mock(Index)
       @registries_link = mock(Link, :get => @registries)
       Link.stub!(:new).and_return(@registries_link)
+      @hash['service'] = {
+        'version' => 'v1.0'
+      }
       do_new
     end
     
@@ -48,6 +51,10 @@ describe Service do
     
     it "returns registries" do
       @service.registries.should == @registries
+    end
+    
+    it "returns version" do
+      @service.version.should == 'v1.0'
     end
   end
 end
