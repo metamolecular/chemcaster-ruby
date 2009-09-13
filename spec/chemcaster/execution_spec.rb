@@ -26,4 +26,25 @@ describe Execution do
     end
     it_should_behave_like "representation with all resources"
   end
+  
+  describe "results" do
+    before(:each) do
+      @hash = {
+        'results' => [
+          {
+            'name' => 'result',
+            'uri' => 'http://example.com',
+            'media_type' => 'application/vnd.com.chemcaster.Structure+json'
+          }
+        ]
+      }
+      @link = mock(Link)
+      Link.stub!(:new).and_return @link
+      @execution = Execution.new mock(Link), @hash
+    end
+    
+    it "has results" do
+      @execution.results.should == [@link]
+    end
+  end
 end
