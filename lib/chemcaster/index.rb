@@ -5,7 +5,7 @@ module Chemcaster
     attr_accessor :item_links#, :items
     resources :parent
     
-    def create representation_attributes
+    def create representation_attributes={}
       @create_link.post representation_attributes
     end
     
