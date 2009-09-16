@@ -3,7 +3,8 @@ require File.dirname(__FILE__) + '/../chemcaster/representation'
 module Chemcaster
   class Service < Representation
     attributes :version
-    attr_accessor :registries_link
+    resources :registries
+#    attr_accessor :registries_link
     
     # Ruby SSL needs to be told the location of the system's SSL CA files.
     # On Debian Linux systems, these files are located at /etc/ssl/certs,
@@ -27,16 +28,16 @@ module Chemcaster
         'media_type' => 'application/vnd.com.chemcaster.Service+json', 'name' => 'root'
       service_link.get
     end
+#    
+#    def registries
+#      @registries_link.get
+#    end
     
-    def registries
-      @registries_link.get
-    end
-    
-    protected
-    
-    def load_hash hash
-      super
-      @registries_link = Link.new hash['registries']
-    end
+#    protected
+#    
+#    def load_hash hash
+#      super
+#      @registries_link = Link.new hash['registries']
+#    end
   end
 end
