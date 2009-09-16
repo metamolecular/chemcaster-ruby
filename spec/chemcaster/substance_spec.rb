@@ -20,7 +20,9 @@ describe Substance do
     before(:each) do
       @resources = {
         'registry' => mock(Registry),
-        'components' => mock(Index)
+        'registration' => mock(Registration),
+        'components' => mock(Index),
+        'images' => mock(Index)
       }
     end
     it_should_behave_like "representation with all resources"
