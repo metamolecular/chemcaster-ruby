@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + "/chemcaster/service"
 require File.dirname(__FILE__) + '/chemcaster/service'
 require File.dirname(__FILE__) + '/chemcaster/registry'
+require File.dirname(__FILE__) + '/chemcaster/registration'
 require File.dirname(__FILE__) + '/chemcaster/structure'
 require File.dirname(__FILE__) + '/chemcaster/substance'
 require File.dirname(__FILE__) + '/chemcaster/component'

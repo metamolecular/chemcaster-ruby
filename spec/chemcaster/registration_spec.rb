@@ -1,16 +1,20 @@
 require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
 require File.expand_path(File.dirname(__FILE__) + "/representation_spec")
 
-describe Registry do
+describe Registration do
   before(:each) do
-    @test_class = Registry
+    @test_class = Registration
   end
   
   describe "attributes" do
     before(:each) do
       @attributes = {
-        'name' => 'foo',
-        'deletable' => true
+        'templates' => [
+          {
+            'multiplier' => 1.0,
+            'serialization' => 'foobar'
+          }
+        ]
       }
     end
     it_should_behave_like "representation with all attributes"
@@ -19,12 +23,8 @@ describe Registry do
   describe "resources" do
     before(:each) do
       @resources = {
-        'service' => mock(Service),
-        'structures' => mock(Index),
-        'queries' => mock(Index),
-        'substances' => mock(Index),
-        'archives' => mock(Index),
-        'registrations' => mock(Index)
+        'registry' => mock(Registry),
+        'substance' => mock(Substance)
       }
     end
     it_should_behave_like "representation with all resources"
