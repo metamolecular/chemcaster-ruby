@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = %q{chemcaster}
-  s.version = "0.3.1"
+  s.version = "0.3.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Richard Apodaca"]
@@ -12,18 +12,22 @@ Gem::Specification.new do |s|
     "Rakefile",
     "lib/chemcaster.rb",
     "lib/chemcaster/error.rb",
-    "lib/chemcaster/image.rb",
     "lib/chemcaster/index.rb",
     "lib/chemcaster/item.rb",
     "lib/chemcaster/link.rb",
     "lib/chemcaster/media_type.rb",
-    "lib/chemcaster/query.rb",
-    "lib/chemcaster/registry.rb",
     "lib/chemcaster/representation.rb",
     "lib/chemcaster/service.rb",
-    "lib/chemcaster/structure.rb",
+    "lib/chemcaster/registry.rb",
     "lib/chemcaster/registration.rb",
-    "lib/chemcaster/component.rb"
+    "lib/chemcaster/substance.rb",
+    "lib/chemcaster/structure.rb",
+    "lib/chemcaster/component.rb",
+    "lib/chemcaster/query.rb",
+    "lib/chemcaster/execution.rb",
+    "lib/chemcaster/archive.rb",
+    "lib/chemcaster/image.rb",
+    
   ]
   s.has_rdoc = false
   s.homepage = %q{http://chemcaster.com}
