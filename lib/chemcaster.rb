@@ -14,6 +14,7 @@ require File.dirname(__FILE__) + '/chemcaster/item'
 require File.dirname(__FILE__) + '/chemcaster/representation'
 require File.dirname(__FILE__) + '/chemcaster/media_type'
 require File.dirname(__FILE__) + '/chemcaster/error'
+require File.dirname(__FILE__) + '/chemcaster/zip'
 
 require 'rubygems'
 require 'json'

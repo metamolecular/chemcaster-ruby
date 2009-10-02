@@ -35,7 +35,7 @@ module Chemcaster
       response = send_request request
 
       raise(HTTPError, response) unless response.code.to_i < 300
-      @media_class.new self, decode(response.body)
+      @media_class.new self, decode(response)
     end
     
     def send_request request
@@ -83,7 +83,11 @@ module Chemcaster
     end
     
     def decode response
-      JSON.parse response
+      if response.content_type.match(/application\/vnd\.com\.chemcaster\.(.*)\+json/)
+        JSON.parse response.body 
+      else
+        response.body
+      end
     end
   end
 end

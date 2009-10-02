@@ -39,7 +39,8 @@ describe Chemcaster::Link do
   
   def mock_response
     @representation = mock(Representation)
-    @response = mock(Net::HTTPResponse, :body => "{}", :code => 200)
+    @response = mock(Net::HTTPResponse, :body => "{}", :code => 200,
+      :content_type => 'application/vnd.com.chemcaster.Foo+json')
   end
   
   def mock_media_type
@@ -82,6 +83,19 @@ describe Chemcaster::Link do
     it "makes the request" do
       @http.should_receive(:request).with(@request).and_return @response
       @action.call
+    end
+    
+    describe "when using non-chemcaster content_type" do
+      before(:each) do
+        @response.stub!(:content_type).and_return 'application/foo'
+        @response.stub!(:body).and_return ""
+        @media_class.stub!(:new).with(@link, @response.body).and_return(@representation)
+      end
+      
+      it "doesn't parse json" do
+        JSON.should_not_receive(:parse)
+        @action.call
+      end
     end
     
     describe "when error response" do

@@ -2,7 +2,12 @@ module Chemcaster
   class MediaType  
     def self.representation name
       name.match(/application\/vnd\.com\.chemcaster\.(.*)\+json/)
-      raise "No such media type: #{name}" unless klass = $1
+      
+      unless klass = $1
+        klass = "Zip" if name == 'application/zip'
+      end
+        
+      raise "No such media type: #{name}" unless klass
       
       begin
         Chemcaster.const_get("#{klass}")

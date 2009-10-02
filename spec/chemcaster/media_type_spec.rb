@@ -33,5 +33,15 @@ describe MediaType do
         lambda{do_representation}.should raise_error
       end
     end
+    
+    describe 'with application/zip' do
+      before(:each) do
+        @media_type = 'application/zip'
+      end
+      
+      it 'returns zip' do
+        do_representation.should == Zip
+      end
+    end
   end
 end
