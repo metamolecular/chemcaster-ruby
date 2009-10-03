@@ -3,6 +3,8 @@ require 'net/https'
 
 module Chemcaster  
   class Link
+    attr_reader :uri, :media_type
+    
     def initialize atts=nil
       if atts
         @uri = URI.parse(atts['uri']) if atts['uri']

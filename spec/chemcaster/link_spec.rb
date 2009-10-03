@@ -184,4 +184,18 @@ describe Chemcaster::Link do
       lambda{@link.delete}.should raise_error(LinkNotDefined)
     end
   end
+  
+  describe "accessing attributes" do
+    before(:each) do
+      @link = Link.new({'name' => 'foo', 'uri' => @uri_string, 'media_type' => @media_name})
+    end
+    
+    it "returns uri" do
+      @link.uri.should == @uri_string
+    end
+    
+    it "returns media type" do
+      @link.media_type.should == @media_name
+    end
+  end
 end
