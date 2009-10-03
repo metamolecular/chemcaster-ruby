@@ -64,9 +64,7 @@ end
 Rake::GemPackageTask.new(spec) do |pkg|
 end
 
-namespace :gem do
-  desc "Pushes gem to gemcutter.org"
-  task :push => [:gem]  do
-    %x[gem push pkg/chemcaster-#{RELEASE}.gem]
-  end
+desc "Pushes gem to gemcutter.org"
+task :gemcutter => [:gem]  do
+  %x[gem push pkg/chemcaster-#{RELEASE}.gem]
 end
