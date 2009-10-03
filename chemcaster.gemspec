@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = %q{chemcaster}
-  s.version = "0.4.1"
+  s.version = "0.4.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Richard Apodaca"]
@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
     "lib/chemcaster/execution.rb",
     "lib/chemcaster/archive.rb",
     "lib/chemcaster/image.rb",
-    
+    "lib/chemcaster/zip.rb"
   ]
   s.has_rdoc = false
   s.homepage = %q{http://chemcaster.com}
