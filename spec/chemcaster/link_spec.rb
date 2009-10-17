@@ -40,12 +40,13 @@ describe Chemcaster::Link do
   def mock_response
     @representation = mock(Representation)
     @response = mock(Net::HTTPResponse, :body => "{}", :code => 200,
-      :content_type => 'application/vnd.com.chemcaster.Foo+json')
+      :content_type => 'application/vnd.com.chemcaster.Foo+json',
+      :[] => nil)
   end
   
   def mock_media_type
     @media_name = 'text/plain'
-    @media_class = mock(Class, :mime_type => 'application/foo')
+    @media_class = mock(Class, :mime_type => 'application/foo', :new => nil)
     @media_key = 'foo'
     MediaType.stub!(:representation).and_return @media_class
     MediaType.stub!(:hash_key).and_return(@media_key)    
@@ -151,6 +152,28 @@ describe Chemcaster::Link do
     
     it_should_behave_like "http request"
     it_should_behave_like "http send representation"
+    
+    describe "when location header given" do
+      before(:each) do
+        @response.stub(:[]).with('Location').and_return 'http://example.com/bar'
+      end
+      
+      it "uses uri in location header for refresh link" do
+        Link.should_receive(:new).with 'name' => 'refresh',
+          'media_type' => 'text/plain', 'uri' => 'http://example.com/bar'
+        @action.call
+      end
+    end
+    
+    describe "when location header not given" do
+      before(:each) do
+      end
+      
+      it "uses itself as link" do
+        @media_class.should_receive(:new).with(@link, {}) 
+        @link.post(@new_representation_attributes)
+      end
+    end
   end
   
   describe "delete" do

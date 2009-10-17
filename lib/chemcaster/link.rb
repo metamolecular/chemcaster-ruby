@@ -31,13 +31,22 @@ module Chemcaster
     
     private
     
+    def link_from_location_header response
+      Link.new 'uri' => response["Location"], 'media_type' => @media_type, 'name' => 'refresh'
+    end
+    
     def do_http method, representation=nil
       validate
       request = request_for_method method, representation
       response = send_request request
 
       raise(HTTPError, response) unless response.code.to_i < 300
-      @media_class.new self, decode(response)
+      
+      if method == 'post' && response["Location"]
+        @media_class.new link_from_location_header(response), decode(response)
+      else
+        @media_class.new self, decode(response)
+      end
     end
     
     def send_request request
