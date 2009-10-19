@@ -46,7 +46,7 @@ describe Representation do
       @hash = {}
 
       @resources.each_key do |name|
-        @hash[name] = {'name' => name}
+        @hash[name] = {'name' => name, 'uri' => 'http://host.com', 'media_type' => 'application/vnd.com.chemcaster.Foo+json'}
         Link.stub!(:new).with(@hash[name]).and_return mock(Link, :get => @resources[name])
       end
 

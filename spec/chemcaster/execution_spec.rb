@@ -30,12 +30,14 @@ describe Execution do
   describe "results" do
     before(:each) do
       @hash = {
-        'results' => [
-          {
-            'name' => 'result',
-            'uri' => 'http://example.com',
-            'media_type' => 'application/vnd.com.chemcaster.Structure+json'
-          }
+        'substances' => [
+          [
+            {
+              'name' => 'result',
+              'uri' => 'http://example.com',
+              'media_type' => 'application/vnd.com.chemcaster.Structure+json'
+            }
+          ]
         ]
       }
       @link = mock(Link)
@@ -44,7 +46,7 @@ describe Execution do
     end
     
     it "has results" do
-      @execution.results.should == [@link]
+      @execution.substances.should == [[@link]]
     end
   end
 end

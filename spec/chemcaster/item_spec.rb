@@ -23,7 +23,9 @@ describe Item do
   describe "index" do
     before(:each) do
       @hash['index'] = {
-        'name' => 'destroy'
+        'name' => 'destroy',
+        'uri' => 'http://example.com',
+        'media_type' => 'application/vnd.com.chemcaster.Index+json'
       }
       @index_link = mock(Link, :get => nil)
       Link.stub!(:new).with(@hash['index']).and_return @index_link

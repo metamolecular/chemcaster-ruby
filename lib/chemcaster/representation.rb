@@ -59,7 +59,12 @@ module Chemcaster
 
       self.class.resource_ids ||= []
       self.class.resource_ids.each do |resource_id|
-        instance_variable_set("@#{resource_id}_link".to_sym, Link.new(hash[resource_id.to_s]))
+        resource_data = hash[resource_id.to_s]
+        if resource_data.nil?
+          instance_variable_set("@#{resource_id}_link".to_sym, Link.new(hash[resource_id.to_s]))
+        elsif resource_data.respond_to?(:has_key?) && resource_data['uri'] && resource_data['media_type']
+          instance_variable_set("@#{resource_id}_link".to_sym, Link.new(hash[resource_id.to_s]))
+        end
       end
     end
   end

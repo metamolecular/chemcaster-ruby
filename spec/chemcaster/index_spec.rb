@@ -38,7 +38,9 @@ describe Index do
     describe "and parent resource" do
       before(:each) do
         @hash['parent'] = {
-          'name' => 'parent'
+          'name' => 'parent',
+          'uri' => 'http://foo.com',
+          'media_type' => 'text/foo'
         }
         @parent_link = mock(Link)
         Link.stub!(:new).with(@hash['parent']).and_return @parent_link
