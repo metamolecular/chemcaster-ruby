@@ -1,6 +1,6 @@
 module Chemcaster
   class Query < Item
-    attributes :serialization
+    attributes :serialization, :mode
     resources :images, :registry, :executions
   end
 end
