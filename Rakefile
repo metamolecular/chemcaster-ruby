@@ -4,7 +4,7 @@ require 'spec/rake/spectask'
 require 'rake/rdoctask'
 require 'rake/gempackagetask'
 
-RELEASE = '0.5.0'
+RELEASE = '0.5.1'
 
 Spec::Rake::SpecTask.new(:spec) do |spec|
   spec.libs << 'lib' << 'spec'
