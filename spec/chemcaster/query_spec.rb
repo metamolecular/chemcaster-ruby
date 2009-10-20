@@ -9,7 +9,8 @@ describe Query do
   describe "attributes" do
     before(:each) do
       @attributes = {
-        'serialization' => 'foo'
+        'serialization' => 'foo',
+        'mode' => 'bar'
       }
     end
     it_should_behave_like "representation with all attributes"
